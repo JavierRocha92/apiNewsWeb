@@ -1,0 +1,133 @@
+/* FORM */
+.form{
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.562);
+}
+/* FIELDSET */
+.form__fieldset{
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+/* MODIFIER TO CONVERT BOTTOM FIELDSET INTO FLEX-END ALING DIV */
+.form__fieldset--bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 40px 0;
+}
+/* MODIFIER TO CONVERT FIELDSET INTO A DETRMINATED WIDTH CONTAINER */
+.form__fieldset--radio{
+    width: 32%;
+    border: 0.2px solid white;
+}
+/* FORM TITLE */
+.form__caption{
+    display: flex;
+    justify-content: flex-start;
+}
+.form__title,.form__subtitle,.iframes__title{
+    color: white;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 0.2px solid red;
+}
+.form__subtitle{
+    color: white;
+}
+/* FORM MAIN */
+.form__main{
+    display: flex;
+    justify-content: center;
+}
+.form__div{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 45%;
+}
+/* MODIFIER TO BECOME THIS MAIN INTO A  FLEX-DIRECTION COLUMN CONATINER*/
+.form__main--radio{
+    display: flex;
+    flex-direction: column;
+}
+/* MODIFIER TO BECOME THIS MAIN INTO A DETERMINACTED ALING DIV*/
+.form__main--bottom{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+}
+/* MODIFIER TO BECOME THIS SUBTITLE INTO A DETERMINATED ALING CONTAINER */
+.form__subtitle--info{
+    display: flex;
+    justify-content: space-between;
+}
+.form__link{
+    color: white;
+}
+/* LABEL AND INPUT STYLES */
+.form__label{
+    color: white;
+    font-size: 1.4rem;
+    padding: 5px;
+    margin-bottom: 4px;
+}
+/* MODIFIER TO BECOME THESE LABEL INTO A DETERMINATED SIZE LABELS */
+.form__label--radio,.form__label--bottom{
+    font-size: 1rem;
+}
+.form__input,.form__select{
+    outline: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid gray;
+    color: white;
+    padding: 5px;
+    margin-bottom: 4px;
+}
+/* MODIFIER TO BECOME THIS INPUT INTO A DETRMINATED STYLED INPUT */
+.form__input--bottom{
+    width: 150px;
+    border: none;
+    border-bottom: 0.2px solid red;
+    border-top: 0.2px solid red;
+}
+/* SEELCT AND INPUT HOVER */
+.form__input:hover,.form__select:hover{
+    border-bottom: 2px solid white;
+}
+/* SELECT AND INPUT FOCUS */
+.form__input:focus,.form__select:focus{
+    border: none;
+    outline: none;
+    border-bottom: 2px solid red;
+    color: white;
+}
+/* INPUT PLACEHOLDER STYLE */
+.form__input::placeholder{
+    color: rgb(180, 176, 176);
+}
+/* MODIFIER TO BECOME BOTTOM BUTTON INTO A DETRMINATED STYLED INPUT */
+.form__input--bottom:hover{
+    border: 0.2px solid red;
+}
+/* SELECT´S OPTION */
+.form__option{
+    color: black;
+}
+.form__option--disabled{
+    color: gray;
+}
+.iframes{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.562);
+}
+.iframe{
+    width: 100%;
+    height: 407px;
+    border-radius: 0.2rem;
+}

@@ -1,0 +1,32 @@
+.nav{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+.nav__list{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+.nav__item{
+    width: 120px;
+    color: white;
+    margin: 4px;
+}
+.nav__link{
+    display: block;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-family: sans-serif;
+    color: white;
+    border: 1px solid white;
+    padding: 5px;
+}
+.nav__link:hover{
+    background-color: white;
+    color: black;
+}

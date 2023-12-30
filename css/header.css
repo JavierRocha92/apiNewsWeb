@@ -1,0 +1,15 @@
+/* STYLES FOR HEADER AND HEADER´S SONS */
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #0C0A0D;
+    padding-bottom: 20px;
+    border-bottom: 2px solid red ;
+}
+.header__logo{
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,77 @@
+/* FOOTER */
+.footer {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+/* EACH ARTICLE FOOTER */
+.footer__article {
+    width: 200px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-right: 1px solid rgba(255, 255, 255, 0.603);
+}
+/* FOOTER HEADER */
+.footer__header {
+    border-bottom: 1px solid red;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.footer__title {
+    font-size: 1.1rem;
+    color: white;
+}
+/* FOOTER MAIN */
+.footer__main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+/* FOOTER LIST */
+.footer__list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin-top: 0;
+    width: 80%;
+    padding: 0;
+}
+.footer__item {
+    width: 80%;
+    margin-bottom: 3px;
+}
+.footer__link {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid transparent;
+}
+.footer__link:hover {
+    border-bottom: 1px solid white;
+}
+/* IMAGES FOOTER CONATINER */
+.footer__images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+/* IMAGE FOOTER */
+.footer__image {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+}
+/* MODIFIER TO MAKE BIGGER SOME IMAGES(CONGRATULATIONS ARTICLE) */
+.footer__image--belt {
+    width: 100px;
+}
