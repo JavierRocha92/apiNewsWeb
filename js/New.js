@@ -8,9 +8,9 @@ class New{
         this._description = description
         this._publishedAt = publishedAt
         this._source = source
-        this._title = title
+        this._title = this.truncateTitle(title)
         this._url = url
-        this._urlToImage = urlToImage
+        this._urlToImage =this.processUrlToImage(urlToImage)
     }
     get author(){
         return author
@@ -86,12 +86,13 @@ class New{
        
        return article
     }
-    showAsCard(element){
-
-    }
+    
     
     truncateContent(content){
+        if(content)
         return content.substring(0,content.indexOf('['))
+        else
+        return ''
     }
     truncateAuthor(author){
         if(author){
@@ -107,6 +108,20 @@ class New{
         }
         return author
     }
+    truncateTitle(title){
+        if(title)
+        return title.substring(0,35) + '...'
+        else
+        return ''
+    }
+
+    processUrlToImage(urlToImage){
+        if(!urlToImage)
+        return '../assets/images/news__default.jpg'
+        else
+        return urlToImage
+    }
+   
 }
 
 export default New

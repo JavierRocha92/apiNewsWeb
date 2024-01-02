@@ -21,10 +21,33 @@
         <header class="header">
             
         </header>
+        <nav class="searcher">
+            <button class="search__button" id="all-button">Show all</button>
+            <input type="text" class="search__input" id="keyword-input" placeholder="Type a keyword">
+            <button class="search__button" id="search_button">Check</button>
+            <select  name="caegory" id="category-select">
+                <option value="" class="search__option">Choose a category</option>
+                
+            </select>
+            <select  name="country" id="country-select">
+                <option value="" class="search__option">Choose a country</option>
+
+            </select>
+            <select  name="date" id="date-select">
+                <option value="" class="search__option">Choose a date</option>
+
+            </select>
+            <div class="container__paginator" id="container-paginator">
+                <button id="back">back</button> 
+                <p class="paginator" id="paginator"> 1 </p>
+                <button id="next">next</button>
+            </div>
+
+        </nav>
         <main class="main" id="main">
         </main>
         <footer class="footer">
-    
+
         </footer>
     </div>
     <!-- BOOTSTRAP JS FILE -->
