@@ -24,6 +24,16 @@ body{
    justify-content: center;
    gap: 10px;
 }
+section{
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+.aside{
+width: 30%;
+}
 .container__paginator{
     display: flex;
     

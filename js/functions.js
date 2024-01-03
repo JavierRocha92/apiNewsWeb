@@ -14,6 +14,17 @@ const functions = {
         if (href) element.href = href
 
         return element
+    },
+    dataHasValues: (data) => {
+        if (data.article) {
+            if (data.article.length == 0)
+                return false
+        }
+        if (data.products) {
+            if (data.products.length == 0)
+                return false
+        }
+        return true
     }
 }
 

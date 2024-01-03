@@ -1,9 +1,10 @@
 import New from './New.js'
+import Product from './Product.js'
 import functions from './functions.js'
 
 //Elements from DOM
 
-const main = document.getElementById('main')
+const section = document.getElementById('section')
 const searchButton = document.getElementById('search_button')
 const keyWordInput = document.getElementById('keyword-input')
 const categorySelect = document.getElementById('category-select')
@@ -17,6 +18,7 @@ const allButton = document.getElementById('all-button')
 
 let page = parseInt(paginator.textContent)
 let allNews = []
+let allProducts = []
 
 let allCategories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 let allCountries = [
@@ -77,90 +79,210 @@ let allCountries = [
 
 
 
-//Functions about fecth information
+//Functions about fecth information 
 
 const fetchNews = async () => {
-    const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-    const json = await news.json()
-    console.log(json)
-    return json
+    try {
+        const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+        //Conditional to check is request was well
+        if (!news.ok) {
+            return null
+        }
+        const json = await news.json()
+        return json
+
+    } catch (error) {
+        return null
+    }
 }
+
+
 const fetchNewsByCategory = async () => {
-    const category = categorySelect.value
-    const news = await fetch('https://newsapi.org/v2/top-headlines?category=' + category + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-    const json = await news.json()
-    return json
+    try {
+        const category = categorySelect.value
+        const news = await fetch('https://newsapi.org/v2/top-headlines?category=' + category + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+        //Conditional to check is request was well
+        if (!news.ok) {
+            return null
+        }
+        const json = await news.json()
+        return json
+
+    } catch (error) {
+        return null
+    }
 }
 const fetchNewsByCountry = async () => {
-    const codeCountry = countrySelect.value.slice(countrySelect.value.indexOf(',') + 2)
-    const news = await fetch('https://newsapi.org/v2/top-headlines?country=' + codeCountry + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-    const json = await news.json()
-    return json
+    try {
+        const codeCountry = countrySelect.value.slice(countrySelect.value.indexOf(',') + 2)
+        const news = await fetch('https://newsapi.org/v2/top-headlines?country=' + codeCountry + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+        //Conditional to check is request was well
+        if (!news.ok) {
+            return null
+        }
+        const json = await news.json()
+        return json
+
+    } catch (error) {
+        return null
+    }
 }
 
 const fetchNewsByKeyword = async () => {
-    console.log(keyWordInput)
-    const keyWord = keyWordInput.value.trim()
-    const news = await fetch('https://newsapi.org/v2/top-headlines?q=' + keyWord + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-    const json = await news.json()
-    return json
+    try {
+        const keyWord = keyWordInput.value.trim()
+        const news = await fetch('https://newsapi.org/v2/top-headlines?q=' + keyWord + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+        //Conditional to check is request was well
+        if (!news.ok) {
+            return null
+        }
+        const json = await news.json()
+        return json
+
+    } catch (error) {
+        console.log('entro en el error')
+        return null
+    }
+}
+const fetchProducts = async (button) => {
+    try {
+        const apiKey = 'RhH0aOAQZGREdeeD4DPtS3Xr'
+        //Conditinal to check if butotn pressed was caegorySelect
+        const category = (button == categorySelect) ? categorySelect.value : 'technology'
+        //Conditional to check if button pressed was keyEordInput
+        const keyWord = (keyWordInput.value.trim() != '') ? keyWordInput.value.trim() : 'mobile'
+        //Condtitional to construct url
+        const url = (button == categorySelect)
+            ? 'https://api.bestbuy.com/v1/products(categoryPath.name=' + category + ')?apiKey=' + apiKey + '&format=json'
+            : 'https://api.bestbuy.com/v1/products(search=' + keyWord + ')?apiKey=' + apiKey + '&format=json'
+        const news = await fetch(url)
+        //Conditional to check is request was well
+        if (!news.ok) {
+            return null
+        }
+        const json = await news.json()
+        return json
+
+    } catch (error) {
+        return null
+    }
 }
 
 
-
 //Function about save data
-const storageData = async (data) => {
-    allNews = []
-    data.articles.forEach(element => {
-        allNews.push(new New(element.author,
-            element.content,
-            element.description,
-            element.publishedAt,
-            element.source.name,
-            element.title,
-            element.url,
-            element.urlToImage))
-    });
+const storageData = async (data, item = 'news') => {
+//Conditional to check if data has or nor values
+if(functions.dataHasValues(data)){
+    if (item == 'news') {
+        allNews = []
+        data.articles.forEach(element => {
+            allNews.push(new New(element.author,
+                element.content,
+                element.description,
+                element.publishedAt,
+                element.source.name,
+                element.title,
+                element.url,
+                element.urlToImage))
+        });
+    }
+    if (item == 'product') {
+        allProducts = []
+        console.log(data.products)
+        data.products.forEach(element => {
+            allProducts.push(new Product(
+                element.albumTitle,
+                element.department,
+                element.updateDate,
+                element.image,
+                element.longDescription,
+                element.url
+            ))
+            // console.log(element.largeFrontImage)
+        });
+    }
     return true
+}
+return false
+
+
 }
 
 //Functions about show data
 
-const showData = () => {
-    main.innerHTML = ''
+const showNews = () => {
+    section.innerHTML = ''
     let fragment = document.createDocumentFragment()
     for (let i = (page - 1) * 20; i < page * 20; i++) {
         const articleNews = allNews[i].getAsCard()
         fragment.appendChild(articleNews)
     }
-    main.appendChild(fragment)
+    section.appendChild(fragment)
+}
+const showProducts = () => {
+    aside.innerHTML = ''
+    let fragment = document.createDocumentFragment()
+    for (let i = 0; i <= 5; i++) {
+        // console.log(allProducts[i])
+        const articleProduct = allProducts[i].getAsCard()
+        fragment.appendChild(articleProduct)
+    }
+    aside.appendChild(fragment)
 }
 
 const getNews = async () => {
     const data = await fetchNews()
-    const storage = await storageData(data)
+    let storage
+    if (data)
+        storage = await storageData(data)
+    else
+        fetchNews()
     if (storage)
-        showData(allNews)
+        showNews(allNews)
 }
 const getNewsByCategory = async () => {
     const data = await fetchNewsByCategory()
-    const storage = await storageData(data)
-    if (storage)
-        showData(allNews)
+    let storage
+    if (data)
+        storage = await storageData(data)
+    else
+        fetchNews()
+    if (storage) {
+        showNews(allNews)
+    }
 }
 const getNewsByCountry = async () => {
     const data = await fetchNewsByCountry()
-    const storage = await storageData(data)
+    let storage
+    if (data)
+        storage = await storageData(data)
+    else
+        fetchNews()
     if (storage)
-        showData(allNews)
+        showNews(allNews)
 }
 const getNewsByKeyword = async () => {
     const data = await fetchNewsByKeyword()
-    const storage = await storageData(data)
-    if (storage)
-        showData(allNews)
+    let storage
+    if (data)
+        storage = await storageData(data)
+    else
+        fetchNews()
+    if (storage) {
+        showNews(allNews)
+    }
 }
+const getProducts = async () => {
+    const data = await fetchProducts()
+    let storage
+    if (data)
+        storage = await storageData(data, 'product')
+    else
+        fetchNews()
 
+    if (storage)
+        showProducts(allProducts)
+}
 const loadSelect = (select, array) => {
     const fragment = document.createDocumentFragment()
     for (const item of array) {
@@ -180,12 +302,15 @@ const handleSearch = (event) => {
     switch (e) {
         case searchButton:
             getNewsByKeyword()
+            getProducts(keyWordInput)
             break
         case countrySelect:
             getNewsByCountry()
+
             break
         case categorySelect:
             getNewsByCategory()
+            getProducts(categorySelect)
             break
         case dateSelect:
             break
@@ -202,11 +327,12 @@ const handleSearch = (event) => {
 document.addEventListener('DOMContentLoaded', () => {
     getNews()
     loadSelects()
+    getProducts()
 })
 
 //Event when all button is pressed
 
-allButton.addEventListener('click',() => {
+allButton.addEventListener('click', () => {
     location.reload()
 })
 
