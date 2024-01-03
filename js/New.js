@@ -62,11 +62,11 @@ class New{
     }
     
     getAsCard(){
-       const article = functions.createElement('ARTICLE',['article'])
+       const div = functions.createElement('DIV',['article__content'])
        const header = functions.createElement('HEADER',['article__header'])
        const header__image = functions.createElement('IMG',['article__image'],false,this._urlToImage)
        header.appendChild(header__image)
-       article.appendChild(header)
+       div.appendChild(header)
 
        const main = functions.createElement('MAIN',['article__main'])
        const title = functions.createElement('H2',['article__title'],this._title)
@@ -75,16 +75,16 @@ class New{
        main.appendChild(content)
        const url = functions.createElement('A',['article__url'],'Go to new', false,this._url)
        main.appendChild(url)
-       article.appendChild(main)
+       div.appendChild(main)
 
        const footer = functions.createElement('FOOTER',['article__footer'])
        const source = functions.createElement('P',['article__source'],this._source)
        footer.appendChild(source)
        const publishedAt = functions.createElement('P',['article__publishedAt'],this._publishedAt)
        footer.appendChild(publishedAt)
-       article.appendChild(footer)
+       div.appendChild(footer)
        
-       return article
+       return div
     }
     
     

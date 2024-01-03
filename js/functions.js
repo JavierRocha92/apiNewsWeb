@@ -24,6 +24,10 @@ const functions = {
             if (data.products.length == 0)
                 return false
         }
+        if(data.results){
+            if(data.results.length == 0)
+            return false
+        }
         return true
     }
 }

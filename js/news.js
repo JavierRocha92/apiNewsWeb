@@ -1,5 +1,7 @@
 import New from './New.js'
 import Product from './Product.js'
+import User from './User.js'
+import Article from './Article.js'
 import functions from './functions.js'
 
 //Elements from DOM
@@ -19,6 +21,8 @@ const allButton = document.getElementById('all-button')
 let page = parseInt(paginator.textContent)
 let allNews = []
 let allProducts = []
+let allUsers = []
+let allArticles = []
 
 let allCategories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 let allCountries = [
@@ -80,20 +84,12 @@ let allCountries = [
 
 
 //Functions about fecth information 
-
 const fetchNews = async () => {
-    try {
-        const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-        //Conditional to check is request was well
-        if (!news.ok) {
-            return null
-        }
-        const json = await news.json()
-        return json
+    const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+    //Conditional to check is request was well
+    const json = await news.json()
+    return json
 
-    } catch (error) {
-        return null
-    }
 }
 
 
@@ -140,19 +136,18 @@ const fetchNewsByKeyword = async () => {
         return json
 
     } catch (error) {
-        console.log('entro en el error')
         return null
     }
 }
-const fetchProducts = async (button) => {
+const fetchProducts = async (filter) => {
     try {
         const apiKey = 'RhH0aOAQZGREdeeD4DPtS3Xr'
         //Conditinal to check if butotn pressed was caegorySelect
-        const category = (button == categorySelect) ? categorySelect.value : 'technology'
+        const category = (filter == 'category') ? categorySelect.value : 'technology'
         //Conditional to check if button pressed was keyEordInput
         const keyWord = (keyWordInput.value.trim() != '') ? keyWordInput.value.trim() : 'mobile'
         //Condtitional to construct url
-        const url = (button == categorySelect)
+        const url = (filter == 'category')
             ? 'https://api.bestbuy.com/v1/products(categoryPath.name=' + category + ')?apiKey=' + apiKey + '&format=json'
             : 'https://api.bestbuy.com/v1/products(search=' + keyWord + ')?apiKey=' + apiKey + '&format=json'
         const news = await fetch(url)
@@ -168,44 +163,89 @@ const fetchProducts = async (button) => {
     }
 }
 
+const fetchUsers = async () => {
+    const users = await fetch('https://randomuser.me/api/?results=20')
+    const json = await users.json()
+    return json
+}
+
 
 //Function about save data
-const storageData = async (data, item = 'news') => {
-//Conditional to check if data has or nor values
-if(functions.dataHasValues(data)){
-    if (item == 'news') {
-        allNews = []
-        data.articles.forEach(element => {
-            allNews.push(new New(element.author,
-                element.content,
-                element.description,
-                element.publishedAt,
-                element.source.name,
-                element.title,
-                element.url,
-                element.urlToImage))
-        });
-    }
-    if (item == 'product') {
-        allProducts = []
-        console.log(data.products)
-        data.products.forEach(element => {
-            allProducts.push(new Product(
-                element.albumTitle,
-                element.department,
-                element.updateDate,
-                element.image,
-                element.longDescription,
-                element.url
-            ))
-            // console.log(element.largeFrontImage)
-        });
-    }
-    return true
+const stroageNews = (data) => {
+    data.articles.forEach(element => {
+        allNews.push(new New(element.author,
+            element.content,
+            element.description,
+            element.publishedAt,
+            element.source.name,
+            element.title,
+            element.url,
+            element.urlToImage))
+    });
 }
-return false
 
+const stroageProducts = (data) => {
+    data.products.forEach(element => {
+        allProducts.push(new Product(
+            element.albumTitle,
+            element.department,
+            element.updateDate,
+            element.image,
+            element.longDescription,
+            element.url
+        ))
+    });
+}
 
+const storageUsers = (data) => {
+    data.results.forEach(element => {
+        allUsers.push(new User(
+            element.name.first,
+            element.name.last,
+            element.email,
+            element.picture.thumbnail,
+            element.dob.age
+        ))
+    });
+}
+
+const storageArticles = () => {
+    console.log('entro en guardar articulos')
+    console.log(allNews)
+    allArticles = []
+    let random
+    allNews.forEach(element => {
+        random = Math.floor(Math.random() * allUsers.length)
+        allArticles.push(new Article(element, allUsers[random]))
+    });
+}
+
+const storageData = async (data, item) => {
+    console.log('entro cno ' + item)
+    //Conditional to check if data has or nor values
+    if (functions.dataHasValues(data)) {
+        switch (item) {
+            case 'user':
+                allUsers = []
+                storageUsers(data)
+                break
+            case 'news':
+                allNews = []
+                stroageNews(data)
+                break
+            case 'product':
+                allProducts = []
+                stroageProducts(data)
+                break
+            case 'articles':
+                console.log('entro en articulos')
+                allArticles = []
+                storageArticles()
+                break
+        }
+        return true
+    }
+    return false
 }
 
 //Functions about show data
@@ -214,8 +254,13 @@ const showNews = () => {
     section.innerHTML = ''
     let fragment = document.createDocumentFragment()
     for (let i = (page - 1) * 20; i < page * 20; i++) {
-        const articleNews = allNews[i].getAsCard()
-        fragment.appendChild(articleNews)
+        if (allArticles[i]) {
+            const articleNews = allArticles[i].getAsCard()
+            fragment.appendChild(articleNews)
+        }
+        else {
+            break
+        }
     }
     section.appendChild(fragment)
 }
@@ -223,66 +268,62 @@ const showProducts = () => {
     aside.innerHTML = ''
     let fragment = document.createDocumentFragment()
     for (let i = 0; i <= 5; i++) {
-        // console.log(allProducts[i])
         const articleProduct = allProducts[i].getAsCard()
         fragment.appendChild(articleProduct)
     }
     aside.appendChild(fragment)
 }
 
-const getNews = async () => {
-    const data = await fetchNews()
-    let storage
-    if (data)
-        storage = await storageData(data)
-    else
-        fetchNews()
-    if (storage)
-        showNews(allNews)
-}
-const getNewsByCategory = async () => {
-    const data = await fetchNewsByCategory()
-    let storage
-    if (data)
-        storage = await storageData(data)
-    else
-        fetchNews()
-    if (storage) {
-        showNews(allNews)
+const getNews = async (filter) => {
+    console.log('entron para descargar ntoicias')
+    let data
+    switch (filter) {
+        case 'category':
+            data = await fetchNewsByCategory()
+            break
+        case 'country':
+            data = await fetchNewsByCountry()
+            break
+        case 'keyword':
+            data = await fetchNewsByKeyword()
+            console.log('las descargo conkey')
+            console.log(data)
+            break
+        default:
+            data = await fetchNews()
     }
-}
-const getNewsByCountry = async () => {
-    const data = await fetchNewsByCountry()
-    let storage
-    if (data)
-        storage = await storageData(data)
-    else
-        fetchNews()
-    if (storage)
-        showNews(allNews)
-}
-const getNewsByKeyword = async () => {
-    const data = await fetchNewsByKeyword()
-    let storage
-    if (data)
-        storage = await storageData(data)
-    else
-        fetchNews()
-    if (storage) {
-        showNews(allNews)
+    const storage = storageData(data, 'news')
+    if (data && data.articles.length != 0) {
+        console.log(data)
+        return true
     }
-}
-const getProducts = async () => {
-    const data = await fetchProducts()
-    let storage
-    if (data)
-        storage = await storageData(data, 'product')
-    else
-        fetchNews()
+    else {
+    }
 
-    if (storage)
-        showProducts(allProducts)
 }
+
+//Function about get
+
+const getUsers = async () => {
+    const data = await fetchUsers()
+    const storage = await storageData(data, 'user')
+    if (storage) {
+        return true
+    }
+}
+
+const getProducts = async (filter) => {
+    const data = await fetchProducts(filter)
+    console.log(data)
+    const storage = await storageData(data, 'product')
+    if (storage) {
+        showProducts(allProducts)
+        return true
+    }
+
+}
+
+
 const loadSelect = (select, array) => {
     const fragment = document.createDocumentFragment()
     for (const item of array) {
@@ -298,25 +339,32 @@ const loadSelects = () => {
 }
 
 const handleSearch = (event) => {
+    console.log('he dado eal boton de buscar')
     const e = event.target
     switch (e) {
         case searchButton:
-            getNewsByKeyword()
-            getProducts(keyWordInput)
+            loadPage('keyword')
             break
         case countrySelect:
-            getNewsByCountry()
-
+            loadPage('country')
             break
         case categorySelect:
-            getNewsByCategory()
-            getProducts(categorySelect)
+            loadPage('category')
             break
         case dateSelect:
             break
     }
 }
 
+const loadPage = async (filter = false) => {
+    const newsOk = await getNews(filter)
+    const selectsOk = await loadSelects()
+    const productsOk = await getProducts(filter)
+    const usersOk = await getUsers()
+    const articlesOk = await storageData(false, 'articles')
+    if (articlesOk)
+        showNews()
+}
 
 // getNews()
 
@@ -324,11 +372,7 @@ const handleSearch = (event) => {
 
 //Event when the page load
 
-document.addEventListener('DOMContentLoaded', () => {
-    getNews()
-    loadSelects()
-    getProducts()
-})
+document.addEventListener('DOMContentLoaded', loadPage)
 
 //Event when all button is pressed
 
@@ -348,7 +392,6 @@ searchButton.addEventListener('click', handleSearch)
 
 containerPaginator.addEventListener('click', (event) => {
     const e = event.target
-    console.log('entro en la funcion')
     switch (e) {
         case back:
             if (page > 1) {
