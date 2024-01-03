@@ -29,6 +29,12 @@ const functions = {
             return false
         }
         return true
+    },
+
+    setNameUser:(name,element) => {
+        let user = JSON.parse(localStorage.getItem('username'))
+        console.log(user.name)
+        element.textContent = 'User: ' + user.name
     }
 }
 

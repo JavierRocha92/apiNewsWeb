@@ -6,12 +6,14 @@ class New{
         this._author = this.truncateAuthor(author)
         this._content = this.truncateContent(content)
         this._description = description
-        this._publishedAt = publishedAt
+        this._publishedAt = this.truncateDate(publishedAt)
         this._source = source
         this._title = this.truncateTitle(title)
         this._url = url
         this._urlToImage =this.processUrlToImage(urlToImage)
     }
+    static title = "Revolutionary Technological Advances Transforming the Global Industry: A Glimpse into the Future"
+    static text = "Staying informed with current news is pivotal in today's dynamic world. News broadcasts and articles offer insights into global events, politics, innovations, and societal changes. It empowers individuals to make informed decisions, fosters awareness, and cultivates an engaged, knowledgeable society, shaping perspectives and driving progress."
     get author(){
         return author
     }
@@ -92,7 +94,7 @@ class New{
         if(content)
         return content.substring(0,content.indexOf('['))
         else
-        return ''
+        return New.text
     }
     truncateAuthor(author){
         if(author){
@@ -112,7 +114,7 @@ class New{
         if(title)
         return title.substring(0,35) + '...'
         else
-        return ''
+        return New.title
     }
 
     processUrlToImage(urlToImage){
@@ -120,6 +122,12 @@ class New{
         return '../assets/images/news__default.jpg'
         else
         return urlToImage
+    }
+    truncateDate(publishedAt){
+        publishedAt = publishedAt.replace('T',' (')
+        publishedAt = publishedAt.substring(0,publishedAt.length -1)
+        publishedAt = publishedAt + ')'
+        return publishedAt
     }
    
 }

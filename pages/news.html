@@ -19,7 +19,7 @@
 <body>
     <div class="container">
         <header class="header">
-            
+            <div class="username" id="username"></div>
         </header>
         <nav class="searcher">
             <button class="search__button" id="all-button">Show all</button>
@@ -33,10 +33,7 @@
                 <option value="" class="search__option">Choose a country</option>
 
             </select>
-            <select  name="date" id="date-select">
-                <option value="" class="search__option">Choose a date</option>
-
-            </select>
+            <input type="date"  name="date" id="date-select">
             <div class="container__paginator" id="container-paginator">
                 <button id="back">back</button> 
                 <p class="paginator" id="paginator"> 1 </p>

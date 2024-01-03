@@ -17,6 +17,7 @@ const containerPaginator = document.getElementById('container-paginator')
 const back = document.getElementById('back')
 const next = document.getElementById('next')
 const allButton = document.getElementById('all-button')
+const username = document.getElementById('username')
 
 let page = parseInt(paginator.textContent)
 let allNews = []
@@ -210,8 +211,6 @@ const storageUsers = (data) => {
 }
 
 const storageArticles = () => {
-    console.log('entro en guardar articulos')
-    console.log(allNews)
     allArticles = []
     let random
     allNews.forEach(element => {
@@ -221,7 +220,6 @@ const storageArticles = () => {
 }
 
 const storageData = async (data, item) => {
-    console.log('entro cno ' + item)
     //Conditional to check if data has or nor values
     if (functions.dataHasValues(data)) {
         switch (item) {
@@ -238,7 +236,6 @@ const storageData = async (data, item) => {
                 stroageProducts(data)
                 break
             case 'articles':
-                console.log('entro en articulos')
                 allArticles = []
                 storageArticles()
                 break
@@ -275,7 +272,6 @@ const showProducts = () => {
 }
 
 const getNews = async (filter) => {
-    console.log('entron para descargar ntoicias')
     let data
     switch (filter) {
         case 'category':
@@ -286,15 +282,12 @@ const getNews = async (filter) => {
             break
         case 'keyword':
             data = await fetchNewsByKeyword()
-            console.log('las descargo conkey')
-            console.log(data)
             break
         default:
             data = await fetchNews()
     }
     const storage = storageData(data, 'news')
     if (data && data.articles.length != 0) {
-        console.log(data)
         return true
     }
     else {
@@ -314,7 +307,6 @@ const getUsers = async () => {
 
 const getProducts = async (filter) => {
     const data = await fetchProducts(filter)
-    console.log(data)
     const storage = await storageData(data, 'product')
     if (storage) {
         showProducts(allProducts)
@@ -339,7 +331,6 @@ const loadSelects = () => {
 }
 
 const handleSearch = (event) => {
-    console.log('he dado eal boton de buscar')
     const e = event.target
     switch (e) {
         case searchButton:
@@ -356,14 +347,22 @@ const handleSearch = (event) => {
     }
 }
 
+const setValues = () => {
+    page = 1
+    paginator.textContent = page
+}
+
 const loadPage = async (filter = false) => {
+    functions.setNameUser('username',username)
     const newsOk = await getNews(filter)
     const selectsOk = await loadSelects()
     const productsOk = await getProducts(filter)
     const usersOk = await getUsers()
     const articlesOk = await storageData(false, 'articles')
-    if (articlesOk)
+    if (articlesOk){
+        setValues()
         showNews()
+    }
 }
 
 // getNews()
@@ -391,6 +390,7 @@ searchButton.addEventListener('click', handleSearch)
 //Event when paginator is pressed
 
 containerPaginator.addEventListener('click', (event) => {
+    console.log('entro en la paginacion')
     const e = event.target
     switch (e) {
         case back:
@@ -405,6 +405,6 @@ containerPaginator.addEventListener('click', (event) => {
             break
     }
     paginator.textContent = page
-    showData()
+    showNews()
 })
 
