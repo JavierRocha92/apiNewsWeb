@@ -19,7 +19,7 @@ class Article{
         this._user = user
     }
     getAsCard(){
-        const article = functions.createElement('ARTICLE'['article'])
+        const article = functions.createElement('ARTICLE',['article'])
         const newsCard = this._news.getAsCard()
         const userCard = this._user.getAsCard()
         article.appendChild(newsCard)

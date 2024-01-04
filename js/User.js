@@ -51,7 +51,7 @@ class User{
         const form = functions.createElement('FORM',['user__form'])
         form.action = 'mailto:' + this._mail
         form.method = 'post'
-        const input = functions.createElement('INPUT',['user__input'])
+        const input = functions.createElement('TEXTAREA',['user__input'])
         input.name = 'message'
         input.placeholder = 'send feedback'
         const button = functions.createElement('BUTTON',['user__button'],'Send')

@@ -11,6 +11,7 @@ const searchButton = document.getElementById('search_button')
 const keyWordInput = document.getElementById('keyword-input')
 const categorySelect = document.getElementById('category-select')
 const countrySelect = document.getElementById('country-select')
+const sourceSelect = document.getElementById('source-select')
 const dateSelect = document.getElementById('date-select')
 const paginator = document.getElementById('paginator')
 const containerPaginator = document.getElementById('container-paginator')
@@ -24,7 +25,7 @@ let allNews = []
 let allProducts = []
 let allUsers = []
 let allArticles = []
-
+let allSources = []
 let allCategories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 let allCountries = [
     'united arab emirates, ae',
@@ -87,6 +88,7 @@ let allCountries = [
 //Functions about fecth information 
 const fetchNews = async () => {
     const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+    // const news = await fetch('https://newsapi.org//v2/everything?apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c&format=json')
     //Conditional to check is request was well
     const json = await news.json()
     return json
@@ -129,6 +131,22 @@ const fetchNewsByKeyword = async () => {
     try {
         const keyWord = keyWordInput.value.trim()
         const news = await fetch('https://newsapi.org/v2/top-headlines?q=' + keyWord + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
+        //Conditional to check is request was well
+        if (!news.ok) {
+            return null
+        }
+        const json = await news.json()
+        return json
+
+    } catch (error) {
+        return null
+    }
+}
+const fetchNewsBySource = async () => {
+    try {
+        const keyWord = keyWordInput.value.trim()
+        const source = sourceSelect.value
+        const news = await fetch('https://newsapi.org/v2/top-headlines?sources=' + source + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
         //Conditional to check is request was well
         if (!news.ok) {
             return null
@@ -250,7 +268,7 @@ const storageData = async (data, item) => {
 const showNews = () => {
     section.innerHTML = ''
     let fragment = document.createDocumentFragment()
-    for (let i = (page - 1) * 20; i < page * 20; i++) {
+    for (let i = (page - 1) * 10; i < page * 10; i++) {
         if (allArticles[i]) {
             const articleNews = allArticles[i].getAsCard()
             fragment.appendChild(articleNews)
@@ -282,6 +300,9 @@ const getNews = async (filter) => {
             break
         case 'keyword':
             data = await fetchNewsByKeyword()
+            break
+        case 'source':
+            data = await fetchNewsBySource()
             break
         default:
             data = await fetchNews()
@@ -325,9 +346,19 @@ const loadSelect = (select, array) => {
     select.appendChild(fragment)
 }
 
+const loadSelectByFetch = async (select) => {
+    const sources = await fetch('https://newsapi.org/v2/top-headlines/sources?apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c&format=json')
+    const json = await sources.json()
+    json.sources.forEach(element => {
+        allSources.push(element.id)
+    });
+    loadSelect(select,allSources)
+}
+
 const loadSelects = () => {
     loadSelect(countrySelect, allCountries)
     loadSelect(categorySelect, allCategories)
+    loadSelectByFetch(sourceSelect)
 }
 
 const handleSearch = (event) => {
@@ -341,6 +372,9 @@ const handleSearch = (event) => {
             break
         case categorySelect:
             loadPage('category')
+            break
+        case sourceSelect:
+            loadPage('source')
             break
         case dateSelect:
             break
@@ -390,7 +424,6 @@ searchButton.addEventListener('click', handleSearch)
 //Event when paginator is pressed
 
 containerPaginator.addEventListener('click', (event) => {
-    console.log('entro en la paginacion')
     const e = event.target
     switch (e) {
         case back:
@@ -399,7 +432,7 @@ containerPaginator.addEventListener('click', (event) => {
             }
             break
         case next:
-            if (page < allNews.length / 20) {
+            if (page < allNews.length / 10) {
                 page++
             }
             break

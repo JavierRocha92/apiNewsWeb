@@ -1,7 +1,7 @@
 import functions from './functions.js'
 
-class Product{
-    constructor(albumTitle,department,updateDate,thumbnailImage,longDescription,url){
+class Product {
+    constructor(albumTitle, department, updateDate, thumbnailImage, longDescription, url) {
         this._albumTitle = albumTitle
         this._department = department
         this._updateDate = updateDate
@@ -60,31 +60,32 @@ class Product{
         this._url = newUrl;
     }
 
-    getAsCard(){
-        const article = functions.createElement('ARTICLE',['article'])
-        const header = functions.createElement('HEADER',['article__header'])
-        const header__image = functions.createElement('IMG',['article__image'],false,this._thumbnailImage)
+    getAsCard() {
+        const product = functions.createElement('ARTICLE', ['product'])
+        const header = functions.createElement('HEADER', ['product__header'])
+        const header__image = functions.createElement('IMG', ['product__image'], false, this._thumbnailImage)
         header.appendChild(header__image)
-        article.appendChild(header)
- 
-        const main = functions.createElement('MAIN',['article__main'])
-        const title = functions.createElement('H2',['article__title'],this._albumTitle)
+        product.appendChild(header)
+
+        const main = functions.createElement('MAIN', ['product__main'])
+        const title = functions.createElement('H2', ['product__title'], this._albumTitle)
         main.appendChild(title)
-        const content = functions.createElement('P',['article__content'],this._longDescription)
+        const content = functions.createElement('P', ['product__content'], this._longDescription)
         main.appendChild(content)
-        const url = functions.createElement('A',['article__url'],'Go to article', false,this._url)
+        const url = functions.createElement('A', ['product__url'], 'Go to product', false, this._url)
+        url.target = '_blank'
         main.appendChild(url)
-        article.appendChild(main)
- 
-        const footer = functions.createElement('FOOTER',['article__footer'])
-        const source = functions.createElement('P',['article__source'],this._department)
+        product.appendChild(main)
+
+        const footer = functions.createElement('FOOTER', ['product__footer'])
+        const source = functions.createElement('P', ['product__source'], this._department)
         footer.appendChild(source)
-        const publishedAt = functions.createElement('P',['article__publishedAt'],this._updateDate)
+        const publishedAt = functions.createElement('P', ['product__publishedAt'], this._updateDate)
         footer.appendChild(publishedAt)
-        article.appendChild(footer)
-        
-        return article
-     }
+        product.appendChild(footer)
+
+        return product
+    }
 }
 
 export default Product

@@ -11,6 +11,9 @@
     <!-- <link rel="stylesheet" href="./css/all.css"> -->
     <!-- <link rel="stylesheet" href="./css/normalize.css"> -->
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/searcher.css">
+    <link rel="stylesheet" href="../css/main.css">
     <!-- CSS MIN ONLINE SOURCE -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
     <!-- FONT-AWESOME REMOTE LIBRARY -->
@@ -23,31 +26,36 @@
         </header>
         <nav class="searcher">
             <button class="search__button" id="all-button">Show all</button>
-            <input type="text" class="search__input" id="keyword-input" placeholder="Type a keyword">
+            <div class="container-search">
+                <input class="search__input" type="text" class="search__input" id="keyword-input" placeholder="Type a keyword">
             <button class="search__button" id="search_button">Check</button>
-            <select  name="caegory" id="category-select">
+            </div>
+            <select class="search__select"  name="caegory" id="category-select">
                 <option value="" class="search__option">Choose a category</option>
                 
             </select>
-            <select  name="country" id="country-select">
+            <select class="search__select"  name="country" id="country-select">
                 <option value="" class="search__option">Choose a country</option>
 
             </select>
-            <input type="date"  name="date" id="date-select">
+            <select class="search__select"  name="source" id="source-select">
+                <option value="" class="search__option">Choose a source</option>
+            </select>
             <div class="container__paginator" id="container-paginator">
-                <button id="back">back</button> 
+                <button class="search__button" id="back">back</button> 
                 <p class="paginator" id="paginator"> 1 </p>
-                <button id="next">next</button>
+                <button class="search__button" id="next">next</button>
             </div>
 
         </nav>
         <main class="main" id="main">
             <section class="section" id="section">
             </section>
-            <aside class="side" id="aside"></aside>
-            <footer class="footer">
+            <aside class="aside" id="aside">
 
+            </aside>
         </main>
+        <footer class="footer">
 
         </footer>
     </div>
