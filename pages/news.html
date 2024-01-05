@@ -22,13 +22,12 @@
 <body>
     <div class="container">
         <header class="header">
-            <div class="username" id="username"></div>
         </header>
         <nav class="searcher">
             <button class="search__button" id="all-button">Show all</button>
             <div class="container-search">
                 <input class="search__input" type="text" class="search__input" id="keyword-input" placeholder="Type a keyword">
-            <button class="search__button" id="search_button">Check</button>
+                <button class="search__button" id="search_button">Check</button>
             </div>
             <select class="search__select"  name="caegory" id="category-select">
                 <option value="" class="search__option">Choose a category</option>
@@ -36,7 +35,7 @@
             </select>
             <select class="search__select"  name="country" id="country-select">
                 <option value="" class="search__option">Choose a country</option>
-
+                
             </select>
             <select class="search__select"  name="source" id="source-select">
                 <option value="" class="search__option">Choose a source</option>
@@ -46,7 +45,10 @@
                 <p class="paginator" id="paginator"> 1 </p>
                 <button class="search__button" id="next">next</button>
             </div>
-
+            
+            <div class="container-username">
+                <p class="username" id="username"></p>
+            </div>
         </nav>
         <main class="main" id="main">
             <section class="section" id="section">

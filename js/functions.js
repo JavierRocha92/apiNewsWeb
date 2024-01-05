@@ -16,6 +16,8 @@ const functions = {
         return element
     },
     dataHasValues: (data) => {
+        console.log('este es el data de has dta values')
+        console.log(data)
         if (data.article) {
             if (data.article.length == 0)
                 return false
@@ -32,9 +34,9 @@ const functions = {
     },
 
     setNameUser:(name,element) => {
-        let user = JSON.parse(localStorage.getItem('username'))
+        let user = JSON.parse(localStorage.getItem(name))
         console.log(user.name)
-        element.textContent = 'User: ' + user.name
+        element.innerHTML = '<i class="fa-solid fa-user"></i> ' + user.name
     }
 }
 

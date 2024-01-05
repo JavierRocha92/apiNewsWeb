@@ -3,6 +3,8 @@ import Product from './Product.js'
 import User from './User.js'
 import Article from './Article.js'
 import functions from './functions.js'
+import Downloader from './Downloader.js'
+import Saver from './Saver.js'
 
 //Elements from DOM
 
@@ -19,6 +21,11 @@ const back = document.getElementById('back')
 const next = document.getElementById('next')
 const allButton = document.getElementById('all-button')
 const username = document.getElementById('username')
+
+//Objects
+
+const downloader = new Downloader('e0a1ccd8efd54f3f91ef2cbb562ab56c','RhH0aOAQZGREdeeD4DPtS3Xr')
+const saver = new Saver()
 
 let page = parseInt(paginator.textContent)
 let allNews = []
@@ -84,188 +91,9 @@ let allCountries = [
 ];
 
 
-
-//Functions about fecth information 
-const fetchNews = async () => {
-    const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-    // const news = await fetch('https://newsapi.org//v2/everything?apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c&format=json')
-    //Conditional to check is request was well
-    const json = await news.json()
-    return json
-
-}
-
-
-const fetchNewsByCategory = async () => {
-    try {
-        const category = categorySelect.value
-        const news = await fetch('https://newsapi.org/v2/top-headlines?category=' + category + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-        //Conditional to check is request was well
-        if (!news.ok) {
-            return null
-        }
-        const json = await news.json()
-        return json
-
-    } catch (error) {
-        return null
-    }
-}
-const fetchNewsByCountry = async () => {
-    try {
-        const codeCountry = countrySelect.value.slice(countrySelect.value.indexOf(',') + 2)
-        const news = await fetch('https://newsapi.org/v2/top-headlines?country=' + codeCountry + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-        //Conditional to check is request was well
-        if (!news.ok) {
-            return null
-        }
-        const json = await news.json()
-        return json
-
-    } catch (error) {
-        return null
-    }
-}
-
-const fetchNewsByKeyword = async () => {
-    try {
-        const keyWord = keyWordInput.value.trim()
-        const news = await fetch('https://newsapi.org/v2/top-headlines?q=' + keyWord + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-        //Conditional to check is request was well
-        if (!news.ok) {
-            return null
-        }
-        const json = await news.json()
-        return json
-
-    } catch (error) {
-        return null
-    }
-}
-const fetchNewsBySource = async () => {
-    try {
-        const keyWord = keyWordInput.value.trim()
-        const source = sourceSelect.value
-        const news = await fetch('https://newsapi.org/v2/top-headlines?sources=' + source + '&apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c')
-        //Conditional to check is request was well
-        if (!news.ok) {
-            return null
-        }
-        const json = await news.json()
-        return json
-
-    } catch (error) {
-        return null
-    }
-}
-const fetchProducts = async (filter) => {
-    try {
-        const apiKey = 'RhH0aOAQZGREdeeD4DPtS3Xr'
-        //Conditinal to check if butotn pressed was caegorySelect
-        const category = (filter == 'category') ? categorySelect.value : 'technology'
-        //Conditional to check if button pressed was keyEordInput
-        const keyWord = (keyWordInput.value.trim() != '') ? keyWordInput.value.trim() : 'mobile'
-        //Condtitional to construct url
-        const url = (filter == 'category')
-            ? 'https://api.bestbuy.com/v1/products(categoryPath.name=' + category + ')?apiKey=' + apiKey + '&format=json'
-            : 'https://api.bestbuy.com/v1/products(search=' + keyWord + ')?apiKey=' + apiKey + '&format=json'
-        const news = await fetch(url)
-        //Conditional to check is request was well
-        if (!news.ok) {
-            return null
-        }
-        const json = await news.json()
-        return json
-
-    } catch (error) {
-        return null
-    }
-}
-
-const fetchUsers = async () => {
-    const users = await fetch('https://randomuser.me/api/?results=20')
-    const json = await users.json()
-    return json
-}
-
-
-//Function about save data
-const stroageNews = (data) => {
-    data.articles.forEach(element => {
-        allNews.push(new New(element.author,
-            element.content,
-            element.description,
-            element.publishedAt,
-            element.source.name,
-            element.title,
-            element.url,
-            element.urlToImage))
-    });
-}
-
-const stroageProducts = (data) => {
-    data.products.forEach(element => {
-        allProducts.push(new Product(
-            element.albumTitle,
-            element.department,
-            element.updateDate,
-            element.image,
-            element.longDescription,
-            element.url
-        ))
-    });
-}
-
-const storageUsers = (data) => {
-    data.results.forEach(element => {
-        allUsers.push(new User(
-            element.name.first,
-            element.name.last,
-            element.email,
-            element.picture.thumbnail,
-            element.dob.age
-        ))
-    });
-}
-
-const storageArticles = () => {
-    allArticles = []
-    let random
-    allNews.forEach(element => {
-        random = Math.floor(Math.random() * allUsers.length)
-        allArticles.push(new Article(element, allUsers[random]))
-    });
-}
-
-const storageData = async (data, item) => {
-    //Conditional to check if data has or nor values
-    if (functions.dataHasValues(data)) {
-        switch (item) {
-            case 'user':
-                allUsers = []
-                storageUsers(data)
-                break
-            case 'news':
-                allNews = []
-                stroageNews(data)
-                break
-            case 'product':
-                allProducts = []
-                stroageProducts(data)
-                break
-            case 'articles':
-                allArticles = []
-                storageArticles()
-                break
-        }
-        return true
-    }
-    return false
-}
-
 //Functions about show data
 
-const showNews = () => {
+const showNews = (allArticles) => {
     section.innerHTML = ''
     let fragment = document.createDocumentFragment()
     for (let i = (page - 1) * 10; i < page * 10; i++) {
@@ -279,7 +107,7 @@ const showNews = () => {
     }
     section.appendChild(fragment)
 }
-const showProducts = () => {
+const showProducts = (allProducts) => {
     aside.innerHTML = ''
     let fragment = document.createDocumentFragment()
     for (let i = 0; i <= 5; i++) {
@@ -293,23 +121,23 @@ const getNews = async (filter) => {
     let data
     switch (filter) {
         case 'category':
-            data = await fetchNewsByCategory()
+            data = await downloader.fetchNewsByCategory(categorySelect)
             break
         case 'country':
-            data = await fetchNewsByCountry()
+            data = await downloader.fetchNewsByCountry(countrySelect)
             break
         case 'keyword':
-            data = await fetchNewsByKeyword()
+            data = await downloader.fetchNewsByKeyword(keyWordInput)
             break
         case 'source':
-            data = await fetchNewsBySource()
+            data = await downloader.fetchNewsBySource(sourceSelect)
             break
         default:
-            data = await fetchNews()
+            data = await downloader.fetchNews()
     }
-    const storage = storageData(data, 'news')
+    const storage = saver.storageData(data, 'news',allUsers,allNews,allProducts,allArticles)
     if (data && data.articles.length != 0) {
-        return true
+        return storage
     }
     else {
     }
@@ -318,20 +146,20 @@ const getNews = async (filter) => {
 
 //Function about get
 
-const getUsers = async () => {
-    const data = await fetchUsers()
-    const storage = await storageData(data, 'user')
+const getUsers = async (filter) => {
+    const data = await downloader.fetchUsers()
+    const storage = await saver.storageData(data, 'user',allUsers,allNews,allProducts,allArticles)
     if (storage) {
-        return true
+        return storage
     }
 }
 
 const getProducts = async (filter) => {
-    const data = await fetchProducts(filter)
-    const storage = await storageData(data, 'product')
+    const data = await downloader.fetchProducts(filter,categorySelect,keyWordInput)
+    const storage = await saver.storageData(data, 'product',allUsers,allNews,allProducts,allArticles)
     if (storage) {
-        showProducts(allProducts)
-        return true
+        showProducts(storage)
+        return storage
     }
 
 }
@@ -347,8 +175,7 @@ const loadSelect = (select, array) => {
 }
 
 const loadSelectByFetch = async (select) => {
-    const sources = await fetch('https://newsapi.org/v2/top-headlines/sources?apiKey=e0a1ccd8efd54f3f91ef2cbb562ab56c&format=json')
-    const json = await sources.json()
+    const json = await downloader.fetchCategories()
     json.sources.forEach(element => {
         allSources.push(element.id)
     });
@@ -388,14 +215,14 @@ const setValues = () => {
 
 const loadPage = async (filter = false) => {
     functions.setNameUser('username',username)
-    const newsOk = await getNews(filter)
+    const allNews = await getNews(filter)
     const selectsOk = await loadSelects()
-    const productsOk = await getProducts(filter)
-    const usersOk = await getUsers()
-    const articlesOk = await storageData(false, 'articles')
-    if (articlesOk){
+    const allProducts = await getProducts(filter)
+    const allUsers = await getUsers(filter)
+    const allArticles = await saver.storageData(false, 'articles',allNews,allUsers)
+    if (allArticles){
         setValues()
-        showNews()
+        showNews(allArticles)
     }
 }
 

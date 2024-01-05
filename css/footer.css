@@ -1,77 +1,40 @@
-/* FOOTER */
-.footer {
-    width: 100%;
+footer{
+    color: white;
     background-color: black;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    gap: 20px;
+    padding-top: 20px;
+}
+.footer__icon{
+    border-radius: 50%;
+    background-color: white;
+    font-size: 1.5rem;
+    padding: 4px;
+    color: black;
+}
+.footer__menu{
+    width: 100%;
     display: flex;
     justify-content: center;
 }
-
-/* EACH ARTICLE FOOTER */
-.footer__article {
-    width: 200px;
-    margin: 20px 0;
+.footer__list{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    border-right: 1px solid rgba(255, 255, 255, 0.603);
-}
-/* FOOTER HEADER */
-.footer__header {
-    border-bottom: 1px solid red;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 30px;
-}
-
-.footer__title {
-    font-size: 1.1rem;
-    color: white;
-}
-/* FOOTER MAIN */
-.footer__main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-/* FOOTER LIST */
-.footer__list {
-    display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     list-style: none;
-    margin-top: 0;
-    width: 80%;
-    padding: 0;
-}
-.footer__item {
-    width: 80%;
-    margin-bottom: 3px;
-}
-.footer__link {
-    text-decoration: none;
+    width: 50%;
     color: white;
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid transparent;
 }
-.footer__link:hover {
+.footer__link:hover{
+    color: rgb(178, 146, 42);
+}
+.footer__text{
+    font-style: italic;
     border-bottom: 1px solid white;
-}
-/* IMAGES FOOTER CONATINER */
-.footer__images {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
-}
-/* IMAGE FOOTER */
-.footer__image {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
-}
-/* MODIFIER TO MAKE BIGGER SOME IMAGES(CONGRATULATIONS ARTICLE) */
-.footer__image--belt {
-    width: 100px;
+    border-top: 1px solid white;
+    width: 100%;
+    text-align: center;
 }
