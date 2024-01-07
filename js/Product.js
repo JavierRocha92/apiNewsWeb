@@ -1,6 +1,18 @@
 import functions from './functions.js'
-
+/**
+ * class to determinate a Product Object
+ */
 class Product {
+    /**
+     * Function to construct a Product Object by taking parameters given
+     * 
+     * @param {string} albumTitle 
+     * @param {string} department 
+     * @param {string} updateDate 
+     * @param {string} thumbnailImage 
+     * @param {string} longDescription 
+     * @param {string} url 
+     */
     constructor(albumTitle, department, updateDate, thumbnailImage, longDescription, url) {
         this._albumTitle = albumTitle
         this._department = department
@@ -9,57 +21,53 @@ class Product {
         this._longDescription = longDescription
         this._url = url
     }
-
-    // Getters
+    // Getter and Setter for Product title
     get albumTitle() {
         return this._albumTitle;
     }
-
-    get department() {
-        return this._department;
-    }
-
-    get updateDate() {
-        return this._updateDate;
-    }
-
-    get thumbnailImages() {
-        return this._thumbnailImages;
-    }
-
-    get longDescription() {
-        return this._longDescription;
-    }
-
-    get url() {
-        return this._url;
-    }
-
-    // Setters
     set albumTitle(newTitle) {
         this._albumTitle = newTitle;
     }
-
+    // Getter and Setter for Product department
+    get department() {
+        return this._department;
+    }
     set department(newDepartment) {
         this._department = newDepartment;
     }
-
+    // Getter and Setter for Product updateDate
+    get updateDate() {
+        return this._updateDate;
+    }
     set updateDate(newUpdateDate) {
         this._updateDate = newUpdateDate;
     }
-
-    set thumbnailImage(newthumbnailImage) {
-        this._thumbnailImage = newthumbnailImage;
+    // Getter and Setter for Product thumbnailImages
+    get thumbnailImages() {
+        return this._thumbnailImages;
     }
-
+    set thumbnailImages(newThumbnailImages) {
+        this._thumbnailImages = newThumbnailImages;
+    }
+    // Getter and Setter for Product longDescription
+    get longDescription() {
+        return this._longDescription;
+    }
     set longDescription(newDescription) {
         this._longDescription = newDescription;
     }
-
+    // Getter and Setter for Product URL
+    get url() {
+        return this._url;
+    }
     set url(newUrl) {
         this._url = newUrl;
     }
-
+    /**
+     * Function to create a div html elemnet with Product object info and covert into card format
+     * 
+     * @returns html div element
+     */
     getAsCard() {
         const product = functions.createElement('ARTICLE', ['product'])
         const header = functions.createElement('HEADER', ['product__header'])

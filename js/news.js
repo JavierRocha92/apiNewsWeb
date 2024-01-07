@@ -1,3 +1,4 @@
+//imports from other js files
 import New from './New.js'
 import Product from './Product.js'
 import User from './User.js'
@@ -5,6 +6,7 @@ import Article from './Article.js'
 import functions from './functions.js'
 import Downloader from './Downloader.js'
 import Saver from './Saver.js'
+import Printer from './Printer.js'
 
 //Elements from DOM
 
@@ -24,8 +26,11 @@ const username = document.getElementById('username')
 
 //Objects
 
-const downloader = new Downloader('e0a1ccd8efd54f3f91ef2cbb562ab56c','RhH0aOAQZGREdeeD4DPtS3Xr')
+const downloader = new Downloader('e0a1ccd8efd54f3f91ef2cbb562ab56c', 'RhH0aOAQZGREdeeD4DPtS3Xr')
 const saver = new Saver()
+const printer = new Printer()
+
+//Global variables
 
 let page = parseInt(paginator.textContent)
 let allNews = []
@@ -91,32 +96,16 @@ let allCountries = [
 ];
 
 
-//Functions about show data
 
-const showNews = (allArticles) => {
-    section.innerHTML = ''
-    let fragment = document.createDocumentFragment()
-    for (let i = (page - 1) * 10; i < page * 10; i++) {
-        if (allArticles[i]) {
-            const articleNews = allArticles[i].getAsCard()
-            fragment.appendChild(articleNews)
-        }
-        else {
-            break
-        }
-    }
-    section.appendChild(fragment)
-}
-const showProducts = (allProducts) => {
-    aside.innerHTML = ''
-    let fragment = document.createDocumentFragment()
-    for (let i = 0; i <= 5; i++) {
-        const articleProduct = allProducts[i].getAsCard()
-        fragment.appendChild(articleProduct)
-    }
-    aside.appendChild(fragment)
-}
+//Function about get information********************************************************************************
 
+/**
+ * Functions to calling aa specific funtions to fetch data depending of the filter 
+ * given as prameter aln retirn this value as json object
+ * 
+ * @param {string} filter 
+ * @returns array
+ */
 const getNews = async (filter) => {
     let data
     switch (filter) {
@@ -135,7 +124,7 @@ const getNews = async (filter) => {
         default:
             data = await downloader.fetchNews()
     }
-    const storage = saver.storageData(data, 'news',allUsers,allNews,allProducts,allArticles)
+    const storage = saver.storageData(data, 'news', allUsers, allNews)
     if (data && data.articles.length != 0) {
         return storage
     }
@@ -143,28 +132,43 @@ const getNews = async (filter) => {
     }
 
 }
-
-//Function about get
-
+/**
+ * Function to call other function for returning an array fullfilled by Users object created by taking info from fetch
+ * 
+ * @param {string} filter 
+ * @returns array
+ */
 const getUsers = async (filter) => {
     const data = await downloader.fetchUsers()
-    const storage = await saver.storageData(data, 'user',allUsers,allNews,allProducts,allArticles)
+    const storage = await saver.storageData(data, 'user', allUsers, allNews)
     if (storage) {
         return storage
     }
 }
-
+/**
+ * Function to call other function for returning an array fullfilled by Product object created by taking info from fetch
+ * 
+ * @param {string} filter 
+ * @returns Product array
+ */
 const getProducts = async (filter) => {
-    const data = await downloader.fetchProducts(filter,categorySelect,keyWordInput)
-    const storage = await saver.storageData(data, 'product',allUsers,allNews,allProducts,allArticles)
+    const data = await downloader.fetchProducts(filter, categorySelect, keyWordInput)
+    const storage = await saver.storageData(data, 'product', allUsers, allNews)
     if (storage) {
-        showProducts(storage)
+        printer.showProducts(storage, aside)
         return storage
     }
 
 }
 
+//Functions about load elements*****************************************************************************
 
+/**
+ * ´Funtions to create option element by calling function and set all of them into select given as parameter
+ * 
+ * @param {HTMLSelectElement} select 
+ * @param {Array} array 
+ */
 const loadSelect = (select, array) => {
     const fragment = document.createDocumentFragment()
     for (const item of array) {
@@ -173,21 +177,31 @@ const loadSelect = (select, array) => {
     }
     select.appendChild(fragment)
 }
-
+/**
+ * Functiont to fect info from api and f get select given as parameter filled by this info
+ * 
+ * @param {HTMLSelectElement} select 
+ */
 const loadSelectByFetch = async (select) => {
     const json = await downloader.fetchCategories()
     json.sources.forEach(element => {
         allSources.push(element.id)
     });
-    loadSelect(select,allSources)
+    loadSelect(select, allSources)
 }
-
+/**
+ * Function to call other function to get all select from pages filled
+ */
 const loadSelects = () => {
     loadSelect(countrySelect, allCountries)
     loadSelect(categorySelect, allCategories)
     loadSelectByFetch(sourceSelect)
 }
-
+/**
+ * Function to load info on page depending of parameter given
+ * 
+ * @param {Event} event 
+ */
 const handleSearch = (event) => {
     const e = event.target
     switch (e) {
@@ -207,22 +221,28 @@ const handleSearch = (event) => {
             break
     }
 }
-
+/**
+ * Function to set all values default 
+ */
 const setValues = () => {
     page = 1
     paginator.textContent = page
 }
-
+/**
+ * Funtion to load spefici information on page depentding od parameter given
+ * 
+ * @param {string} filter 
+ */
 const loadPage = async (filter = false) => {
-    functions.setNameUser('username',username)
-    const allNews = await getNews(filter)
+    functions.setNameUser('username', username)
+    allNews = await getNews(filter)
     const selectsOk = await loadSelects()
-    const allProducts = await getProducts(filter)
-    const allUsers = await getUsers(filter)
-    const allArticles = await saver.storageData(false, 'articles',allNews,allUsers)
-    if (allArticles){
+    allProducts = await getProducts(filter)
+    allUsers = await getUsers(filter)
+    allArticles = await saver.storageData(false, 'articles', allNews, allUsers)
+    if (allArticles) {
         setValues()
-        showNews(allArticles)
+        printer.showNews(allArticles, section, page)
     }
 }
 
@@ -265,6 +285,6 @@ containerPaginator.addEventListener('click', (event) => {
             break
     }
     paginator.textContent = page
-    showNews()
+    printer.showNews(allArticles, section, page)
 })
 

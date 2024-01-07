@@ -3,10 +3,18 @@ import New from './New.js'
 import Product from './Product.js'
 import User from './User.js'
 import Article from './Article.js'
+/**
+ * class to determinate a saver onject
+ */
 class Saver {
 
 
-    //Function about save data
+    /**
+     * Function to convert all information in New Object and stroage all fo them into allNews array
+     * 
+     * @param {JSON} data 
+     * @returns New Object Array
+     */
     stroageNews = (data) => {
         let allNews = []
 
@@ -22,7 +30,12 @@ class Saver {
         });
         return allNews
     }
-
+    /**
+     * Function to convert all information in Product Object and stroage all fo them into alProduct array
+     * 
+     * @param {JSON} data 
+     * @returns Product Object Array
+     */
     stroageProducts = (data) => {
         let allProducts = []
 
@@ -38,7 +51,12 @@ class Saver {
         });
         return allProducts
     }
-
+    /**
+     * Function to convert all information in User Object and stroage all fo them into allUser array
+     * 
+     * @param {JSON} data 
+     * @returns User Object Array
+     */
     storageUsers = (data) => {
         let allUsers = []
         data.results.forEach(element => {
@@ -52,7 +70,12 @@ class Saver {
         });
         return allUsers
     }
-
+    /**
+     * Function to convert all information in Article Object and stroage all fo them into allArticles array
+     * 
+     * @param {JSON} data 
+     * @returns Article Object Array
+     */
     storageArticles = (allNews,allUsers) => {
         let random
         let allArticles = []
@@ -63,7 +86,15 @@ class Saver {
         });
         return allArticles
     }
-
+    /**
+     * Function to determinate which funtion call to get a aspedific array filled by taking informatino from parameter item given
+     * 
+     * @param {JSON} data 
+     * @param {string} item 
+     * @param {Array} allUsers 
+     * @param {Array} allNews 
+     * @returns object Array
+     */
     storageData = async (data, item,allUsers,allNews) => {
         //Conditional to check if data has or nor values
         if (functions.dataHasValues(data)) {

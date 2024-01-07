@@ -1,24 +1,47 @@
+/**
+ * class to determinate a Downloader Object
+ */
 class Downonloader {
+    /**
+     * Function to sonstruct a Dwonloader Object tankign two apis keys attributes to connect to them
+     * 
+     * @param {string} newsKey 
+     * @param {string} bestbuyKey 
+     */
     constructor(newsKey,bestbuyKey) {
         this._newsKey = newsKey
         this._bestbuyKey = bestbuyKey
     }
+    /**
+     * Function to get this._newsky
+     */
     get newsKey() {
         return this._newsKey
     }
-
+    /**
+     * Function to set value to this._newskey
+     */
     set newsKey(newsKey) {
         this._newsKey = newsKey
     }
+    /**
+     * Function to get this._bestbuysky
+     */
     get bestbuyKey() {
         return this._bestbuyKey
     }
-
+    /**
+     * Function to set value to this._bestbuykey
+     */
     set bestbuyKey(bestbuyKey) {
         this._bestbuyKey = bestbuyKey
     }
 
-    //Functions about fecth information 
+    /**
+     * Funcion to fetch asn specific information from news api and return this info convert into JSON element
+     * 
+     * @returns JSON 
+     */
     fetchNews = async () => {
         const news = await fetch('https://newsapi.org/v2/everything?q=world&apiKey=' + this._newsKey)
         // const news = await fetch('https://newsapi.org//v2/everything?apiKey=& + this._newsKeyformat=json')
@@ -28,7 +51,13 @@ class Downonloader {
 
     }
 
-
+    /**
+     * Funcion to fetch asn specific information from news api and return this info convert into JSON element, in this case information is filtered by category
+     * 
+     * 
+     * @param {HTMLSelectElement} categorySelect 
+     * @returns JSON
+     */
     fetchNewsByCategory = async (categorySelect) => {
         try {
             const category = categorySelect.value
@@ -44,6 +73,13 @@ class Downonloader {
             return null
         }
     }
+    /**
+     * Funcion to fetch asn specific information from news api and return this info convert into JSON element, in this case the informatino is filtered by country
+     * 
+     * 
+     * @param {HTMLSelectElement} countrySelect 
+     * @returns 
+     */
     fetchNewsByCountry = async (countrySelect) => {
         try {
             const codeCountry = countrySelect.value.slice(countrySelect.value.indexOf(',') + 2)
@@ -59,7 +95,13 @@ class Downonloader {
             return null
         }
     }
-
+    /**
+     * Funcion to fetch asn specific information from news api and return this info convert into JSON element, in this case the informatino is filtered by key word
+     * 
+     * 
+     * @param {HTMLInputElement} keyWordInput 
+     * @returns 
+     */
     fetchNewsByKeyword = async (keyWordInput) => {
         try {
             const keyWord = keyWordInput.value.trim()
@@ -75,6 +117,13 @@ class Downonloader {
             return null
         }
     }
+    /**
+     * Funcion to fetch asn specific information from news api and return this info convert into JSON element, in this case the information is filtered by source
+     * 
+     * 
+     * @param {HTMLSelectElement} sourceSelect 
+     * @returns 
+     */
     fetchNewsBySource = async (sourceSelect) => {
         try {
             const source = sourceSelect.value
@@ -90,6 +139,16 @@ class Downonloader {
             return null
         }
     }
+    /**
+     * Funcion to fetch asn specific information from bestnuy api and return this info convert into JSON element, in this case the informatino is filterd by category or keyword,
+     * this is depending of the filter given as parameter
+     * 
+     * 
+     * @param {string} filter 
+     * @param {HTMLSelectElement} categorySelect 
+     * @param {HTMLInputElement} keyWordInput 
+     * @returns JSON
+     */
     fetchProducts = async (filter, categorySelect, keyWordInput) => {
         try {
             //Conditinal to check if butotn pressed was caegorySelect
@@ -112,13 +171,21 @@ class Downonloader {
             return null
         }
     }
-
+    /**
+     * Function to fetch an especific ifnormation from random user api, in this case only 20 users
+     * 
+     * @returns JSON
+     */
     fetchUsers = async () => {
         const users = await fetch('https://randomuser.me/api/?results=20')
         const json = await users.json()
         return json
     }
-
+    /**
+     * FUncion to fect information about all categories form nes api
+     * 
+     * @returns JSON
+     */
     fetchCategories = async () => {
         const sources = await fetch('https://newsapi.org/v2/top-headlines/sources?apiKey=' + this._newsKey + '&format=json')
         const json = await sources.json()

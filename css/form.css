@@ -1,0 +1,89 @@
+.visor_form{
+    position: relative;
+    margin: 20px;
+    border-radius: 10px;
+    background-image: url('../assets/images/form__bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+    width: 700px;
+}
+.container-form{
+    width: 300px;
+    border: 0.5px solid white;
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    text-align: center;
+    padding: 10px;
+}
+.visor{
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+.visor__image{
+width: 100%;
+}
+.title{
+    font-family: monserrat;
+    color: white;
+}
+.form{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    padding-top: 20px;
+}
+.form__icon{
+    margin-right: 10px;
+}
+.container-input{
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid white;
+    color: white;
+    width: 80%;
+}
+.container-input--checkbox,.container-input--button{
+    border: none;
+}
+.container-input:hover{
+    color: #FF7338;
+    border-bottom: 2px solid #FF7338;
+}
+.container-input--checkbox:hover,.container-input--button:hover{
+    border: none;
+}
+.form__input{
+    background-color: transparent;
+    border: none;
+}
+.form__input:focus{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
+.form__button{
+    font-family: monserrat;
+    border: 0;
+    background-color: #FF7338;
+    text-decoration: none;
+    display: block;
+    width: 50%;
+    align-self: center;
+    text-align: center;
+    padding: 3px;
+    color: white;
+    font-size: 1.2rem;
+    border: 1px solid transparent;
+}
+.form__button:hover{
+    color: #FF7338;
+    background-color: white ;
+    border: 1px solid #FF7338;
+}
