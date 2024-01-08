@@ -1,0 +1,14 @@
+Para la realización de esta aplicacón hemos usado el funcionamiento de tres apis, en concreto hemos usado como api principal la api de newsapi, la cual nos porporciona las noticias de todo el mundo de manera actualizada, para el filtrado usamos el manejo de varios elementos select para filtrar por categoria, pais o fuente de informacion, y el uso de un input para filtrar por palabra clave.
+
+A su vez hacemos el uso de un api de informacion de productos en venta en una tienda llamada bestbuy, esta la utilizamos para emular anuncios en un aside en funcion de la informacion que se busque sobre las noticias se hara una peticion de inofmracion sobre los productos que tenga que ver con dicha informacion.
+
+Tambien se usa el api visto en clase random user, para dar mas infomacion sobre la noticia, dando informacion sobre el supuesto escritor de la noticia, con un formulario para mandar comentarios sobre la informacion a dicho usuario.
+
+Para acceder a la pagina se debe hacer una especie de fake login ya que no hay ninguna validacion, el cual alamacenara el nombre de usuario en el localstorage para despues mostrarlo en la siguiente pantalla a modo de login.
+
+Se usa la utilizacion de objetos para separar lo maximo posible las direferentes acciones de la logica, como un objeto para las funciones de descargar informacion, otro que se dedica a la creacion de objetos de diferentes tipos y almacenarlos en array como variables globales, y otro objecto que se encargar de mostrar por pantalla la informacion de los objetos principales mediante la creacion de elementos html.
+
+Apis usadas en la practica
+newsapi       https://newsapi.org/
+bestbuyapi    https://developer.bestbuy.com/
+ramdom user   https://randomuser.me/

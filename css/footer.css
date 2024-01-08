@@ -22,19 +22,23 @@
     justify-content: center;
 }
 .footer__list{
-    display: flex;
+    display: none;
     justify-content: space-around;
     list-style: none;
-    width: 50%;
+    width: 80%;
     color: white;
 }
 .footer__link:hover{
     color: rgb(178, 146, 42);
+}
+.footer__info{
+    width: 100%;
+    padding-right: 10px;
 }
 .footer__text{
     font-style: italic;
     border-bottom: 1px solid white;
     border-top: 1px solid white;
     width: 100%;
-    text-align: center;
+    text-align: right;
 }

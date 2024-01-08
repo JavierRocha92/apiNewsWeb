@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,16 +15,19 @@
     <link rel="stylesheet" href="./css/header.css">
     <!-- <link rel="stylesheet" href="./css/main.css"> -->
     <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/form.css">
+    <link rel="stylesheet" href="./css/responsive.css">
     <!-- CSS MIN ONLINE SOURCE -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
     <!-- FONT-AWESOME REMOTE LIBRARY -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
         <header class="header">
-            
+
         </header>
         <main class="main">
             <!-- container form visor -->
@@ -43,13 +47,15 @@
                         <div class="container-input">
                             <!-- user icon -->
                             <i class=" form__icon fa-solid fa-user"></i>
-                            <input type="text" id="username" name="username" class="form__input" id="input__form" placeholder="username">
+                            <input type="text" id="username" name="username" class="form__input" id="input__form"
+                                placeholder="username">
                         </div>
                         <!-- password input -->
                         <div class="container-input">
                             <!-- lock icon -->
                             <i class=" form__icon fa-solid fa-lock"></i>
-                            <input type="password" id="password" name="password" class="form__input" id="input__form" placeholder="password">
+                            <input type="password" id="password" name="password" class="form__input" id="input__form"
+                                placeholder="password">
                         </div>
                         <!-- cekbox input -->
                         <div class="container-input container-input--checkbox">
@@ -63,6 +69,70 @@
                     </form>
                 </div>
             </div>
+            <!-- final visor form -->
+            <!-- section card begin -->
+            <section class="cards">
+                <!-- card 1 -->
+                <article class="card">
+                    <!-- card image -->
+                    <img src="./assets/images/breakin__news__index.jpg" alt="" class="card__image">
+                    <!-- card content -->
+                    <div class="card__content">
+                        <!-- card header -->
+                        <header class="card__header">
+                            <h2 class="card__title">
+                                Stay up to date with breaking news around the whole world
+                            </h2>
+                        </header>
+                        <!-- card main -->
+                        <main class="card__main">
+                            <p class="card__text">
+                                Going through all ours news aorund all over teh world and stay up to date,
+                                sign up for free and receive notifications about wath is happening in the world at this
+                                time
+                            </p>
+                            <button class="card__button">Sign up</button>
+                        </main>
+                        <!-- card footer -->
+                        <footer class="card__footer">
+                            <p class="card__text--footer">
+                                Copyright&copy2023
+                            </p>
+                        </footer>
+                    </div>
+                </article>
+                <!-- final card -->
+                <!-- card 2 -->
+                <article class="card card--reverse">
+                    <!-- card image -->
+                    <img src="./assets/images/work__news__index.webp" alt="" class="card__image card__image--reverse">
+                    <!-- card content -->
+                    <div class="card__content">
+                        <!-- card header -->
+                        <header class="card__header card__header--reverse">
+                            <h2 class="card__title">
+                                Start to work with us as columnist, send us your info and get into our company
+                            </h2>
+                        </header>
+                        <!-- card main -->
+                        <main class="card__main card__main--reverse">
+                            <p class="card__text">
+                                Join our vibrant team as a columnist! Showcase your voice, shape opinions, and engage
+                                readers with compelling narratives. Embrace a platform that values creativity,
+                                diversity, and impactful storytelling
+                            </p>
+                            <button class="card__button">Send</button>
+                        </main>
+                        <!-- card footer -->
+                        <footer class="card__footer">
+                            <p class="card__text--footer">
+                                Copyright&copy2023
+                            </p>
+                        </footer>
+                    </div>
+                </article>
+                <!-- final card -->
+            </section>
         </main>
         <footer class="footer">
             <header class="footer__social d-flez justify-content-center">
@@ -92,9 +162,14 @@
     </div>
     <!-- BOOTSTRAP JS FILE -->
     <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
     <!-- OTHER JS FILES -->
     <script src="./js/login.js"></script>
 </body>
+
 </html>
